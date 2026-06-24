@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="is">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#17212b">
+    <meta name="description" content="LoftVerkfaeri fyrir daglega loftraestingu a verkstad.">
+    <title>LoftVerkfaeri</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-inner">
+        <button class="icon-button menu-toggle" type="button" aria-label="Syna valmynd" data-menu-toggle>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div>
+          <p class="eyebrow">Daglegt reikniverkfaeri</p>
+          <h1>LoftVerkfæri</h1>
+        </div>
+        <button class="icon-button" type="button" aria-label="Prenta eda vista PDF" data-print-current>
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M6 9V3h12v6"></path>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <path d="M6 14h12v7H6z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <nav class="side-nav" aria-label="Aðalflokkar" data-nav>
+        <button class="nav-item active" type="button" data-section-target="home">Forsíða</button>
+        <button class="nav-item" type="button" data-section-target="flow">Loftmagn</button>
+        <button class="nav-item" type="button" data-section-target="velocity">Lofthraði</button>
+        <button class="nav-item" type="button" data-section-target="duct">Stokkastærð</button>
+        <button class="nav-item" type="button" data-section-target="pressure">Þrýstifall</button>
+        <button class="nav-item" type="button" data-section-target="convert">Umbreytingar</button>
+        <button class="nav-item" type="button" data-section-target="projects">Verkefni</button>
+      </nav>
+
+      <main>
+        <section class="section active" id="home" data-section>
+          <div class="section-head">
+            <p class="eyebrow">Verkstaður</p>
+            <h2>Reiknaðu loftkerfi á nokkrum sekúndum</h2>
+          </div>
+
+          <div class="quick-grid">
+            <button class="quick-card" type="button" data-section-target="flow">
+              <span class="quick-icon">Q</span>
+              <strong>Loftmagn</strong>
+              <small>m³/h og l/s</small>
+            </button>
+            <button class="quick-card" type="button" data-section-target="velocity">
+              <span class="quick-icon">V</span>
+              <strong>Lofthraði</strong>
+              <small>m/s og viðmið</small>
+            </button>
+            <button class="quick-card" type="button" data-section-target="duct">
+              <span class="quick-icon">D</span>
+              <strong>Stokkastærð</strong>
+              <small>hringur og ferkantað</small>
+            </button>
+            <button class="quick-card" type="button" data-section-target="pressure">
+              <span class="quick-icon">ΔP</span>
+              <strong>Þrýstifall</strong>
+              <small>stokkar og íhlutir</small>
+            </button>
+            <button class="quick-card" type="button" data-section-target="convert">
+              <span class="quick-icon">↔</span>
+              <strong>Umbreytingar</strong>
+              <small>loft, hraði og þrýstingur</small>
+            </button>
+            <button class="quick-card" type="button" data-section-target="projects">
+              <span class="quick-icon">✓</span>
+              <strong>Verkefni</strong>
+              <small>vista og flytja út</small>
+            </button>
+          </div>
+
+          <div class="status-strip">
+            <div>
+              <span>Leiðbeinandi viðmið</span>
+              <strong>Aðalstokkar 4-7 m/s</strong>
+            </div>
+            <div>
+              <span>Vistun</span>
+              <strong>LocalStorage</strong>
+            </div>
+            <div>
+              <span>Útgáfa</span>
+              <strong>Offline eftir fyrstu opnun</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="flow" data-section>
+          <div class="section-head">
+            <p class="eyebrow">Loftmagn</p>
+            <h2>Reikna Q út frá lofthraða</h2>
+          </div>
+
+          <div class="tool-grid two">
+            <article class="tool-card">
+              <div class="card-head">
+                <h3>Út frá stokkastærð</h3>
+                <span class="pill">Q = A × v</span>
+              </div>
+              <div class="segmented" role="group" aria-label="Stokkagerð">
+                <button class="active" type="button" data-flow-shape="round">Hringstokkur</button>
+                <button type="button" data-flow-shape="rect">Ferkantaður</button>
+              </div>
+              <div class="form-grid" data-flow-round>
+                <label>Þvermál hringstokks (mm)<input inputmode="decimal" type="number" min="1" id="flowDiameter" value="250"></label>
+              </div>
+              <div class="form-grid hidden" data-flow-rect>
+                <label>Breidd (mm)<input inputmode="decimal" type="number" min="1" id="flowWidth" value="400"></label>
+                <label>Hæð (mm)<input inputmode="decimal" type="number" min="1" id="flowHeight" value="200"></label>
+              </div>
+              <label>Lofthraði (m/s)<input inputmode="decimal" type="number" min="0" step="0.1" id="flowVelocity" value="4.5"></label>
+              <div class="result-card">
+                <span>Loftmagn</span>
+                <strong id="flowM3h">0 m³/h</strong>
+                <em id="flowLs">0 l/s</em>
+              </div>
+              <button class="primary-action" type="button" data-save-calc="flow">Vista í verkefni</button>
+            </article>
+
+            <article class="tool-card">
+              <div class="card-head">
+                <h3>Út frá flatarmáli</h3>
+                <span class="pill">m²</span>
+              </div>
+              <label>Flatarmál stokks (m²)<input inputmode="decimal" type="number" min="0" step="0.001" id="areaInput" value="0.05"></label>
+              <label>Lofthraði (m/s)<input inputmode="decimal" type="number" min="0" step="0.1" id="areaVelocity" value="4"></label>
+              <div class="result-card">
+                <span>Loftmagn</span>
+                <strong id="areaM3h">0 m³/h</strong>
+                <em id="areaLs">0 l/s</em>
+              </div>
+              <button class="primary-action" type="button" data-save-calc="area">Vista í verkefni</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="velocity" data-section>
+          <div class="section-head">
+            <p class="eyebrow">Lofthraði</p>
+            <h2>Reikna v út frá loftmagni</h2>
+          </div>
+
+          <div class="tool-grid two">
+            <article class="tool-card">
+              <div class="card-head">
+                <h3>Stærð stokks</h3>
+                <span class="pill">v = Q / A</span>
+              </div>
+              <label>Loftmagn (m³/h)<input inputmode="decimal" type="number" min="0" id="velFlow" value="850"></label>
+              <div class="segmented" role="group" aria-label="Stokkagerð">
+                <button class="active" type="button" data-vel-shape="round">Hringstokkur</button>
+                <button type="button" data-vel-shape="rect">Ferkantaður</button>
+              </div>
+              <div class="form-grid" data-vel-round>
+                <label>Þvermál (mm)<input inputmode="decimal" type="number" min="1" id="velDiameter" value="250"></label>
+              </div>
+              <div class="form-grid hidden" data-vel-rect>
+                <label>Breidd (mm)<input inputmode="decimal" type="number" min="1" id="velWidth" value="400"></label>
+                <label>Hæð (mm)<input inputmode="decimal" type="number" min="1" id="velHeight" value="200"></label>
+              </div>
+              <div class="result-card">
+                <span>Lofthraði</span>
+                <strong id="velocityResult">0 m/s</strong>
+                <em id="velocityNote">Sláðu inn gildi</em>
+              </div>
+              <button class="primary-action" type="button" data-save-calc="velocity">Vista í verkefni</button>
+            </article>
+
+            <article class="tool-card guide-card">
+              <h3>Algeng viðmið</h3>
+              <div class="guide-row"><span>Aðalstokkar</span><strong>4-7 m/s</strong></div>
+              <div class="guide-row"><span>Greinistokkar</span><strong>2-5 m/s</strong></div>
+              <div class="guide-row"><span>Ventlar</span><strong>1-3 m/s</strong></div>
+              <p>Gildin eru eingöngu leiðbeinandi. Hljóð, þrýstifall og kröfur hönnunar ráða endanlegri lausn.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="duct" data-section>
+          <div class="section-head">
+            <p class="eyebrow">Stokkastærð</p>
+            <h2>Finna stærð út frá Q og æskilegum hraða</h2>
+          </div>
+
+          <div class="tool-grid two">
+            <article class="tool-card">
+              <label>Loftmagn (m³/h)<input inputmode="decimal" type="number" min="0" id="ductFlow" value="1000"></label>
+              <label>Æskilegur lofthraði (m/s)<input inputmode="decimal" type="number" min="0.1" step="0.1" id="ductVelocity" value="4.5"></label>
+              <div class="result-card">
+                <span>Mælt þvermál</span>
+                <strong id="ductRound">0 mm</strong>
+                <em id="ductArea">Flatarmál 0 m²</em>
+              </div>
+              <button class="primary-action" type="button" data-save-calc="duct">Vista í verkefni</button>
+            </article>
+
+            <article class="tool-card">
+              <div class="card-head">
+                <h3>Ferkantaðar tillögur</h3>
+                <span class="pill">staðlaðar stærðir</span>
+              </div>
+              <div class="suggestion-list" id="rectSuggestions"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="pressure" data-section>
+          <div class="section-head">
+            <p class="eyebrow">Þrýstifall</p>
+            <h2>Áætla þrýstifall í stokkum og íhlutum</h2>
+          </div>
+
+          <div class="tool-grid two">
+            <article class="tool-card">
+              <div class="segmented" role="group" aria-label="Stokkagerð">
+                <button class="active" type="button" data-pressure-shape="round">Hringstokkur</button>
+                <button type="button" data-pressure-shape="rect">Ferkantaður</button>
+              </div>
+              <label>Lengd beins stokks (m)<input inputmode="decimal" type="number" min="0" step="0.1" id="pressureLength" value="12"></label>
+              <label>Loftmagn (m³/h)<input inputmode="decimal" type="number" min="0" id="pressureFlow" value="1000"></label>
+              <div class="form-grid" data-pressure-round>
+                <label>Þvermál (mm)<input inputmode="decimal" type="number" min="1" id="pressureDiameter" value="315"></label>
+              </div>
+              <div class="form-grid hidden" data-pressure-rect>
+                <label>Breidd (mm)<input inputmode="decimal" type="number" min="1" id="pressureWidth" value="400"></label>
+                <label>Hæð (mm)<input inputmode="decimal" type="number" min="1" id="pressureHeight" value="250"></label>
+              </div>
+              <div class="result-card">
+                <span>Heildarþrýstifall</span>
+                <strong id="pressureTotal">0 Pa</strong>
+                <em id="pressureBreakdown">Beinn stokkur 0 Pa</em>
+              </div>
+              <button class="primary-action" type="button" data-save-calc="pressure">Vista í verkefni</button>
+            </article>
+
+            <article class="tool-card">
+              <div class="card-head">
+                <h3>Íhlutir</h3>
+                <span class="pill">K-gildi</span>
+              </div>
+              <div class="component-list" id="componentList"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="convert" data-section>
+          <div class="section-head">
+            <p class="eyebrow">Umbreytingar</p>
+            <h2>Fljótlegar einingabreytingar</h2>
+          </div>
+
+          <div class="converter-grid" id="converterGrid"></div>
+        </section>
+
+        <section class="section" id="projects" data-section>
+          <div class="section-head">
+            <p class="eyebrow">Verkefni</p>
+            <h2>Vista útreikninga og athugasemdir</h2>
+          </div>
+
+          <div class="tool-grid two">
+            <article class="tool-card">
+              <label>Heiti verkefnis<input type="text" id="projectName" value="Leikhús Vestmannaeyja"></label>
+              <label>Kerfi<input type="text" id="projectSystem" value="Innblástur A"></label>
+              <label>Athugasemdir<textarea id="projectNotes" rows="5" placeholder="Skráðu mælingar, aðstæður eða næstu skref"></textarea></label>
+              <div class="action-row">
+                <button class="primary-action" type="button" id="saveProject">Vista verkefni</button>
+                <button class="secondary-action" type="button" id="printProject">PDF</button>
+              </div>
+            </article>
+
+            <article class="tool-card">
+              <div class="card-head">
+                <h3>Vistuð verkefni</h3>
+                <button class="text-action" type="button" id="clearProjectForm">Nýtt</button>
+              </div>
+              <div class="project-list" id="projectList"></div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" data-toast role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

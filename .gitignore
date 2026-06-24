@@ -1,0 +1,6 @@
+server.log
+server.err
+cloudflared.log
+cloudflared.err
+.codex/
+.agents/
